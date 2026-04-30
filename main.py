@@ -2,6 +2,7 @@ from src.estudiante import Estudiante
 from src.docente import Docente
 from src.asignatura import Asignatura
 from src.curso import Curso
+from src.inscripcion import Inscripcion
 
 
 def main():
@@ -68,6 +69,22 @@ def main():
         print("Estudiante inscrito correctamente.")
     else:
         print("No se pudo inscribir: el curso no tiene cupos disponibles.")
+
+    print()
+    print("=== REGISTRO DE CALIFICACIONES ===")
+
+    inscripcion_1 = Inscripcion(estudiante_1, curso)
+    inscripcion_1.registrar_calificacion(6.0)
+    inscripcion_1.registrar_calificacion(5.5)
+    inscripcion_1.registrar_calificacion(6.2)
+
+    inscripcion_2 = Inscripcion(estudiante_2, curso)
+    inscripcion_2.registrar_calificacion(3.5)
+    inscripcion_2.registrar_calificacion(4.0)
+    inscripcion_2.registrar_calificacion(3.8)
+
+    print(inscripcion_1.mostrar_resumen())
+    print(inscripcion_2.mostrar_resumen())
 
 
 if __name__ == "__main__":
