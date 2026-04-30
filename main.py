@@ -1,8 +1,12 @@
+from datetime import date
+
 from src.estudiante import Estudiante
 from src.docente import Docente
 from src.asignatura import Asignatura
 from src.curso import Curso
 from src.inscripcion import Inscripcion
+from src.beca import Beca
+from src.pago import Pago
 
 
 def main():
@@ -85,6 +89,30 @@ def main():
 
     print(inscripcion_1.mostrar_resumen())
     print(inscripcion_2.mostrar_resumen())
+
+    print()
+    print("=== GESTIÓN DE BECAS Y PAGOS ===")
+
+    beca_excelencia = Beca(
+        nombre="Beca Excelencia Académica",
+        porcentaje_descuento=50
+    )
+
+    pago_camila = Pago(
+        arancel=1200000,
+        fecha_pago=date.today()
+    )
+
+    estudiante_1.asignar_beca(beca_excelencia)
+    estudiante_1.agregar_pago(pago_camila)
+
+    print(estudiante_1.mostrar_info())
+    print(beca_excelencia.mostrar_info())
+    print(pago_camila.mostrar_info(estudiante_1.beca))
+
+    pago_camila.marcar_pagado()
+    print("Después de registrar el pago:")
+    print(pago_camila.mostrar_info(estudiante_1.beca))
 
 
 if __name__ == "__main__":
