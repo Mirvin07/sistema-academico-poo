@@ -1,0 +1,97 @@
+@startuml diagrama_clases
+
+title Sistema Académico Universitario - Diagrama de Clases
+
+skinparam classAttributeIconSize 0
+
+class Persona {
+  - rut: str
+  - nombre: str
+  - correo: str
+  + __init__(rut: str, nombre: str, correo: str)
+  + mostrar_info(): str
+}
+
+class Estudiante {
+  - carrera: str
+  - beca: Beca
+  - pagos: list
+  + __init__(rut: str, nombre: str, correo: str, carrera: str)
+  + mostrar_info(): str
+  + asignar_beca(beca: Beca): void
+  + agregar_pago(pago: Pago): void
+}
+
+class Docente {
+  - especialidad: str
+  - cursos_asignados: list
+  + __init__(rut: str, nombre: str, correo: str, especialidad: str)
+  + mostrar_info(): str
+  + asignar_curso(curso: Curso): void
+}
+
+class Asignatura {
+  - codigo: str
+  - nombre: str
+  - creditos: int
+  + __init__(codigo: str, nombre: str, creditos: int)
+  + mostrar_info(): str
+}
+
+class Curso {
+  - codigo: str
+  - asignatura: Asignatura
+  - docente: Docente
+  - horario: str
+  - cupo: int
+  - estudiantes: list
+  + __init__(codigo: str, asignatura: Asignatura, horario: str, cupo: int)
+  + asignar_docente(docente: Docente): void
+  + inscribir_estudiante(estudiante: Estudiante): bool
+  + listar_estudiantes(): void
+  + mostrar_info(): str
+}
+
+class Inscripcion {
+  - estudiante: Estudiante
+  - curso: Curso
+  - calificaciones: list
+  + __init__(estudiante: Estudiante, curso: Curso)
+  + registrar_calificacion(nota: float): void
+  + calcular_promedio(): float
+  + determinar_estado(): str
+  + mostrar_resumen(): str
+}
+
+class Beca {
+  - nombre: str
+  - porcentaje_descuento: float
+  + __init__(nombre: str, porcentaje_descuento: float)
+  + calcular_descuento(monto: float): float
+  + mostrar_info(): str
+}
+
+class Pago {
+  - arancel: float
+  - fecha_pago: date
+  - estado: str
+  + __init__(arancel: float, fecha_pago: date)
+  + calcular_pago_final(beca: Beca): float
+  + marcar_pagado(): void
+  + mostrar_info(): str
+}
+
+Persona <|-- Estudiante
+Persona <|-- Docente
+
+Curso o-- Asignatura
+Curso --> Docente
+Curso --> "0..*" Estudiante
+
+Inscripcion --> Estudiante
+Inscripcion --> Curso
+
+Estudiante --> "0..1" Beca
+Estudiante --> "0..*" Pago
+
+@enduml
